@@ -20,20 +20,24 @@ export class TodoPage {
   }
 
   async goto() {
-    await this.page.goto(`${BASE_URL}/#/`);
+    const { page } = this;
+    await page.goto(`${BASE_URL}/#/`);
   }
 
   async addTodo(text: string) {
-    await this.input.fill(text);
-    await this.input.press('Enter');
+    const { input } = this;
+    await input.fill(text);
+    await input.press('Enter');
   }
 
   async getTodoText(index: number): Promise<string> {
-    return (await this.todoItems.nth(index).getByTestId('todo-title').textContent()) ?? '';
+    const item = this.todoItems.nth(index);
+    return (await item.getByTestId('todo-title').textContent()) ?? '';
   }
 
   async toggleTodo(index: number) {
-    await this.todoItems.nth(index).getByLabel('Toggle Todo').click();
+    const item = this.todoItems.nth(index);
+    await item.getByLabel('Toggle Todo').click();
   }
 
   async editTodo(index: number, newText: string) {
@@ -50,18 +54,22 @@ export class TodoPage {
   }
 
   async isVisible(index: number): Promise<boolean> {
-    return await this.todoItems.nth(index).isVisible();
+    const item = this.todoItems.nth(index);
+    return await item.isVisible();
   }
 
   async getCount(): Promise<number> {
-    return await this.todoItems.count();
+    const { todoItems } = this;
+    return await todoItems.count();
   }
 
   async clearCompletedTodos() {
-    await this.clearCompleted.click();
+    const { clearCompleted } = this;
+    await clearCompleted.click();
   }
 
   async toggleAllTodos() {
-    await this.toggleAll.click();
+    const { toggleAll } = this;
+    await toggleAll.click();
   }
 }
