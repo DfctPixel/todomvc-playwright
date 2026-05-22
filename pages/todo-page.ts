@@ -8,6 +8,7 @@ export class TodoPage {
   readonly todoItems: Locator;
   readonly todoCount: Locator;
   readonly clearCompleted: Locator;
+  readonly toggleAll: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -15,6 +16,7 @@ export class TodoPage {
     this.todoItems = page.locator('.todo-list li');
     this.todoCount = page.locator('.todo-count');
     this.clearCompleted = page.locator('.clear-completed');
+    this.toggleAll = page.getByLabel('Mark all as complete');
   }
 
   async goto() {
@@ -27,24 +29,24 @@ export class TodoPage {
   }
 
   async getTodoText(index: number): Promise<string> {
-    return (await this.todoItems.nth(index).locator('label').textContent()) ?? '';
+    return (await this.todoItems.nth(index).getByTestId('todo-title').textContent()) ?? '';
   }
 
   async toggleTodo(index: number) {
-    await this.todoItems.nth(index).locator('.toggle').click();
+    await this.todoItems.nth(index).getByLabel('Toggle Todo').click();
   }
 
   async editTodo(index: number, newText: string) {
     const item = this.todoItems.nth(index);
-    await item.dblclick();
-    const editInput = item.locator('.edit');
-    await editInput.fill(newText);
-    await editInput.press('Enter');
+    await item.getByTestId('todo-title').dblclick();
+    await item.getByLabel('Edit').fill(newText);
+    await item.getByLabel('Edit').press('Enter');
   }
 
   async deleteTodo(index: number) {
-    await this.todoItems.nth(index).hover();
-    await this.todoItems.nth(index).locator('.destroy').click();
+    const item = this.todoItems.nth(index);
+    await item.hover();
+    await item.getByLabel('Delete').click();
   }
 
   async isVisible(index: number): Promise<boolean> {
@@ -57,5 +59,9 @@ export class TodoPage {
 
   async clearCompletedTodos() {
     await this.clearCompleted.click();
+  }
+
+  async toggleAllTodos() {
+    await this.toggleAll.click();
   }
 }
