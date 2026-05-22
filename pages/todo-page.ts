@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 
-const BASE_URL = process.env.BASE_URL;
+const BASE_URL = process.env.BASE_URL || 'https://demo.playwright.dev/todomvc';
 
 export class TodoPage {
   readonly page: Page;
