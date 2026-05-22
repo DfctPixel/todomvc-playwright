@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 
-const BASE_URL = process.env.BASE_URL || 'https://demo.playwright.dev/todomvc';
+const BASE_URL = process.env.BASE_URL;
 
 export class TodoPage {
   readonly page: Page;
@@ -20,14 +20,12 @@ export class TodoPage {
   }
 
   async goto() {
-    const { page } = this;
-    await page.goto(`${BASE_URL}/#/`);
+    await this.page.goto(`${BASE_URL}/#/`);
   }
 
   async addTodo(text: string) {
-    const { input } = this;
-    await input.fill(text);
-    await input.press('Enter');
+    await this.input.fill(text);
+    await this.input.press('Enter');
   }
 
   async getTodoText(index: number): Promise<string> {
@@ -59,17 +57,14 @@ export class TodoPage {
   }
 
   async getCount(): Promise<number> {
-    const { todoItems } = this;
-    return await todoItems.count();
+    return await this.todoItems.count();
   }
 
   async clearCompletedTodos() {
-    const { clearCompleted } = this;
-    await clearCompleted.click();
+    await this.clearCompleted.click();
   }
 
   async toggleAllTodos() {
-    const { toggleAll } = this;
-    await toggleAll.click();
+    await this.toggleAll.click();
   }
 }
