@@ -13,8 +13,6 @@ jobs:
       - run: npx playwright install
       - run: npm run lint
       - run: npm run test:ci
-        env:
-          BASE_URL: ${{ secrets.BASE_URL }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
