@@ -18,14 +18,10 @@ Playwright + TypeScript end-to-end tests for the [TodoMVC](https://demo.playwrig
 ## Setup
 
 ```bash
-# 1. Install project dependencies
+git clone https://github.com/DfctPixel/todomvc-playwright.git
+cd todomvc-playwright
 npm install
-
-# 2. Install Chromium browser for Playwright
 npx playwright install
-
-# 3. (Optional) Create .env file with custom URL
-echo BASE_URL=https://demo.playwright.dev/todomvc > .env
 ```
 
 If you skip the `.env` file, the tests will use the default URL (`https://demo.playwright.dev/todomvc`).
